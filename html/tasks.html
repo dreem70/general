@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../images/logo.jpg" type="image/jpg">
+    <title>قائمة مهام</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="../style/side_menu.css">
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 20px; background: linear-gradient(to bottom, #e6f7e6, #4f8a5f); /* من الأخضر الفاتح إلى الغامق */
+    background-attachment: fixed; /* يبقى ثابتًا عند التمرير */
+    margin: 0;
+    padding: 0;
+    height: 100vh;}
+        .container { width: 50%; margin: auto; }
+        input, button { padding: 10px; margin: 5px; }
+        input {
+            width: 700px !important; /* فرض عرض العنصر */
+            
+        }
+        ul { list-style: none; padding: 0; }
+        li {
+    padding: 10px;
+    margin: 5px 0;
+    display: flex;
+    flex-direction: row; /* ترتيب العناصر من اليمين لليسار */
+    align-items: center; /* محاذاة العناصر في المنتصف */
+    justify-content: space-between; /* جعل النص على اليمين والشيك بوكس على اليسار */
+    gap: 10px; /* ترك مسافة بين الشيك بوكس والنص */
+    text-align: right; /* جعل النص في أقصى اليمين */
+}
+
+li input[type="checkbox"] {
+    margin-left: auto; /* دفع الشيك بوكس إلى أقصى اليسار */
+}
+
+
+        
+        .logo {
+    position: absolute;
+    top: 10px;  /* جعلها في الأعلى */
+    left: 10px; /* جعلها في اليسار */
+    width: 100px; /* تكبير الصورة */
+    height: 100px;
+    border-radius: 10px;
+}
+@media (max-width: 768px) {
+    .container {
+        width: 90%; /* جعل العرض أكبر في الهاتف */
+    }
+    
+    input {
+        width: 90% !important; /* تقليل عرض الـ input ليتناسب مع الهاتف */
+    }
+    
+    button {
+        width: 100%; /* جعل الأزرار تأخذ العرض الكامل */
+    }
+    
+    li {
+        flex-direction: row-reverse; /* ترتيب العناصر من اليمين لليسار */
+        font-size: 16px; /* تكبير النص */
+    }
+
+    .logo {
+        width: 70px; /* تصغير الشعار */
+        height: 70px;
+        top: 5px;
+        left: 5px;
+    }
+}
+
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let username = localStorage.getItem("username");
+            if (!username) {
+                username = prompt("أدخل اسم المستخدم:");
+                if (username) {
+                    localStorage.setItem("username", username);
+                } else {
+                    alert("يجب إدخال اسم مستخدم!");
+                    return;
+                }
+            }
+            document.getElementById("username").innerText = username;
+            loadTasks();
+        });
+
+        function loadTasks() {
+            let username = localStorage.getItem("username");
+            fetch('../php/tasks.php?action=get&username=' + encodeURIComponent(username))
+                .then(response => response.text())
+                .then(data => document.getElementById("taskList").innerHTML = data);
+        }
+
+        function addTask() {
+            let task = document.getElementById("taskInput").value;
+            let username = localStorage.getItem("username");
+            if (task.trim() === "") return;
+
+            fetch('../php/tasks.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: 'task=' + encodeURIComponent(task) + '&username=' + encodeURIComponent(username)
+            }).then(() => {
+                document.getElementById("taskInput").value = "";
+                loadTasks();
+            });
+        }
+
+        function deleteTask(taskId) {
+            fetch('../php/tasks.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: 'delete_task=' + encodeURIComponent(taskId)
+            }).then(() => loadTasks());
+        }
+    </script>
+</head>
+<body>
+<button class="menu-btn" onclick="toggleMenu()">
+        <i class="fas fa-bars"></i>
+      </button>
+
+<div class="sidebar" id="sidebar">
+    <ul>
+        <li><a href="../index.html"><i class="fas fa-sign-out-alt"></i> تسجيل خروج</a></li>
+        <li><a href="student_home.html"><i class="fas fa-house"></i> الرئيسية</a></li>
+        <li><a href="show_lessons_fr_student.html"><i class="fas fa-book-open"></i> عرض الحصص</a></li>
+        <li><a href="examm.html"><i class="fas fa-file-pen"></i>  الدخول للامتحان</a></li>
+        <li><a href="tasks.html"><i class="fas fa-tasks"></i> قائمة المهام</a></li>
+
+
+    </ul>
+</div>
+
+<div class="container">
+    <h2>قائمة مهام</h2>
+    <h3>مرحبًا، <span id="username"></span></h3>
+
+    <input type="text" id="taskInput" placeholder="أدخل مهمة جديدة">
+    <button onclick="addTask()">إضافة</button>
+
+    <h3>المهام الغير منجزة</h3>
+    <ul id="taskList"></ul>
+</div>
+<img src="../images/logo.jpg" alt="شعار منصة ابن مندور" class="logo">
+</body>
+<script src="../JS/ToggleMenu.js"></script>
+
+</html>

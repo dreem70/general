@@ -1,0 +1,28 @@
+.add-question-btn, .add-sub-question-btn, .add-answer-btn, .submit-btn {
+    padding: 10px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+}
+.add-sub-question-btn, .add-answer-btn {
+    background-color: #2196F3;
+}
+.add-question-btn:hover, .add-sub-question-btn:hover, .add-answer-btn:hover, .submit-btn:hover {
+    background-color: #45a049;
+}
+.sub-question-container, .answer-container {
+    margin-left: 40px;
+}
+.answer-options {
+    margin-top: 10px;
+}
+.answer-options input[type="radio"] {
+    margin-left: 5px;
+}
+.answer-options label {
+    margin-left: 10px;
+}

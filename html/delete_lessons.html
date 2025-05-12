@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../images/logo.jpg" type="image/jpg">
+    <title>حذف البيانات</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="../style/side_menu.css">
+
+    <style>
+        /* استيراد خط جميل */
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700&display=swap');
+
+body {
+    font-family: 'Tajawal', sans-serif;
+    background: url('../images/bg.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #fff;
+}
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* طبقة شفافة فوق الخلفية */
+    backdrop-filter: blur(8px); /* تأثير بلور */
+    z-index: -1;
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    margin-top: 50px;
+
+}
+
+h2 {
+    background: #2c3e50;
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: bold;
+    box-shadow: 0 2px 10px rgba(255, 204, 0, 0.5);
+}
+
+.table {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.table thead {
+    background: #2c3e50;
+    color: black;
+    font-weight: bold;
+}
+
+.table tbody tr {
+    transition: 0.3s;
+}
+
+.table tbody tr:hover {
+    background: rgba(255, 204, 0, 0.3);
+    transform: scale(1.02);
+}
+
+.table td, .table th {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #2c3e50;
+}
+
+.table-responsive {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* زر الحذف */
+.btn-danger {
+    background: linear-gradient(to right, #ff4444, #cc0000);
+    border: none;
+    padding: 12px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: 0.3s;
+    width: 30%;
+    display: block;  /* يجعل العنصر بلوكي */
+    margin: auto;  /* يوسّطه أفقيًا */
+    text-align: center; /* يوسّط النص داخله */
+}
+
+.btn-danger:hover {
+    background: linear-gradient(to right, #cc0000, #990000);
+    transform: scale(1.05);
+}
+
+/* تحسين شكل الـ checkbox */
+input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+/* جعل الجدول متناسق */
+.table th, .table td {
+    vertical-align: middle;
+}
+
+/* رسائل التحذير */
+.text-danger {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.logo {
+    position: absolute;
+    top: 10px;  /* جعلها في الأعلى */
+    left: 10px; /* جعلها في اليسار */
+    width: 100px; /* تكبير الصورة */
+    height: 100px;
+    border-radius: 10px;
+}
+@media (max-width: 600px) {
+    body {
+        background: url('Mbg.jpg') no-repeat center center fixed;
+        background-size: cover;
+        
+    }
+
+    body::before {
+        position: fixed;
+        
+    }
+    .container {
+        position: absolute;
+        top: 75%;
+        right: 0%;
+        transform: rotate(90deg) translate(-50%, -50%);
+        transform-origin: center;
+        width: 85vh;
+        height: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .btn-danger {
+    position: absolute;
+        width:20%;
+        font-size:10px;
+        top: -50px; /* يجعله أعلى الكارت */
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10; /* لضمان ظهوره فوق العناصر */
+
+    }
+    .table td, .table th {
+    padding: 15px; /* تقليل التباعد الداخلي */
+    font-size: 8px; /* تصغير حجم الخط */
+    text-align: center;
+    border: 1px solid #2c3e50;
+    
+    } 
+    
+}
+
+
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            fetchLessons();
+        });
+
+function fetchLessons() {
+    fetch("../php/delete_lessons.php")
+        .then(response => response.json())
+        .then(data => {
+            let tableBody = document.getElementById("lessonsTableBody");
+            tableBody.innerHTML = "";
+
+            if (data.length === 0) {
+                tableBody.innerHTML = "<tr><td colspan='7' class='text-danger text-center'>لا توجد بيانات متاحة</td></tr>";
+                return;
+            }
+
+            data.forEach(row => {
+                let tr = document.createElement("tr");
+
+                // التحقق من القيم الفارغة (null) قبل العرض
+                let classData = row.class ? row.class : '';
+                let unitData = row.unit ? row.unit : '';
+                let semesterData = row.semester ? row.semester : '';
+                let lessonData = row.lesson ? row.lesson : '';
+                let detailsData = row.short_details ? row.short_details : '';
+
+                tr.innerHTML = `
+                    <td><input type="checkbox" name="delete_row" value="${row.id}"></td>
+                    <td>${classData} <input type="checkbox" name="delete_class" value="${row.id}"></td>
+                    <td>${unitData} <input type="checkbox" name="delete_unit" value="${row.id}"></td>
+                    <td>${semesterData} <input type="checkbox" name="delete_semester" value="${row.id}"></td>
+                    <td>${lessonData} <input type="checkbox" name="delete_lesson" value="${row.id}"></td>
+                    <td>${detailsData} <input type="checkbox" name="delete_details" value="${row.id}"></td>
+                `;
+                tableBody.appendChild(tr);
+            });
+        })
+        .catch(error => console.error("Error fetching lessons:", error));
+}
+
+function deleteSelected() {
+    let selectedData = {
+        delete_row: [],
+        delete_class: [],
+        delete_unit: [],
+        delete_semester: [],
+        delete_lesson: [],
+        delete_details: [],
+        delete_files: []
+    };
+
+    document.querySelectorAll("input[type='checkbox']:checked").forEach(checkbox => {
+        selectedData[checkbox.name].push(checkbox.value);
+    });
+
+    if (Object.values(selectedData).every(arr => arr.length === 0)) {
+        alert("يرجى تحديد البيانات التي تريد حذفها.");
+        return;
+    }
+
+    if (!confirm("هل أنت متأكد من حذف البيانات المحددة؟")) {
+        return;
+    }
+
+    fetch("../php/delete_lessons.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(selectedData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message);
+        fetchLessons();
+    })
+    .catch(error => console.error("Error deleting data:", error));
+}
+
+function toggleMenu() {
+    let sidebar = document.getElementById("sidebar");
+    sidebar.classList.toggle("active");
+}
+
+    </script>
+</head>
+<img src="../images/logo.jpg" alt="شعار منصة ابن مندور" class="logo">
+  <button class="menu-btn" onclick="toggleMenu()">
+        <i class="fas fa-bars"></i>
+      </button>
+
+<div class="sidebar" id="sidebar">
+    <ul>
+        <li><a href="../index.html"><i class="fas fa-sign-in-alt"></i> تسجيل خروج</a></li>
+        <li><a href="teacher_home.html"><i class="fas fa-home"></i> الرئيسية</a></li>
+        <li><a href="students.html"><i class="fas fa-user-graduate"></i> الطلاب</a></li>
+        <li><a href="add_student.html"><i class="fas fa-user-plus"></i> اضافة طالب جديد</a></li>
+        <li><a href="lessons_ctrl.html"><i class="fas fa-chalkboard-teacher"></i> ادارة الحصص</a></li>
+        <li><a href="exames_ctrl.html"><i class="fas fa-file-alt"></i> ادارة الامتحانات</a></li>
+
+    </ul>
+</div>
+<body class="bg-light">
+    <div class="container mt-5">
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped text-center">
+                <thead class="table-dark">
+                    <tr>
+                        <th>حذف الصف</th> 
+                        <th>الصف</th>
+                        <th>الوحدة</th>
+                        <th>الفصل الدراسي</th>
+                        <th>الحصة</th>
+                        <th>التفاصيل</th>
+                        
+                        
+                    </tr>
+                </thead>
+                <tbody id="lessonsTableBody">
+                    <tr><td colspan="6" class="text-center">جارٍ تحميل البيانات...</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <button onclick="deleteSelected()" class="btn btn-danger">حذف المحدد</button>
+    </div>
+</body>
+</html>

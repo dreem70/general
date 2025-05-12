@@ -1,0 +1,79 @@
+.input-group {
+    margin-bottom: 20px;
+    text-align: right;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    font-size: 20px;
+    color: #2c3e50; 
+    font-weight: bold; /* يجعل الحواف أوضح */
+    text-shadow: 
+        -1px -1px 0 white,  
+         1px -1px 0 white,  
+        -1px  1px 0 white,  
+         1px  1px 0 white,
+        -1px  0px 0 white,  
+         1px  0px 0 white,  
+         0px -1px 0 white,  
+         0px  1px 0 white;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid gray; /* اللون الرمادي */
+    border-radius: 8px;
+    font-size: 18px;
+    background: rgba(255, 255, 255, 0.2);
+    color: #2c3e50; /* اللون الأصفر */
+}
+
+input {
+    padding: 10px;
+    margin: 10px;
+    width: 80%;
+}
+#student_name {
+    width: 300px;
+    padding: 10px 15px;
+    font-size: 16px;
+    border: 2px solid #007bff;
+    border-radius: 8px;
+    outline: none;
+    transition: 0.3s ease;
+  }
+  
+  #student_name::placeholder {
+    color: #999;
+  }
+  
+  #student_name:focus {
+    border-color: #0056b3;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+  }
+  
+
+
+  .question-input, .sub-question-input, .answer-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.question-input{
+    width: 100%;
+padding: 10px;
+font-size: 16px;
+margin-top: 10px;
+border: 1px solid #ccc;
+border-radius: 5px;
+height: 100px; /* ارتفاع الحقل */
+resize: vertical; /* السماح بتغيير الحجم يدويًا */
+overflow-y: auto; /* إضافة شريط تمرير عند الحاجة */
+vertical-align: top; /* يجعل النص يبدأ من الأعلى */
+}

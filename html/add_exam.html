@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../images/logo.jpg" type="image/jpg">
+    <title>إنشاء امتحان</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="../style/side_menu.css">
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            direction: rtl;
+            background: url('../images/bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+            padding: 20px;
+            margin: 0;
+        }
+        body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* طبقة شفافة فوق الخلفية */
+    backdrop-filter: blur(8px); /* تأثير بلور */
+    z-index: -1;
+}
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 36px;
+            text-shadow: 
+        -1px -1px 0 white,  
+         1px -1px 0 white,  
+        -1px  1px 0 white,  
+         1px  1px 0 white,
+        -1px  0px 0 white,  
+         1px  0px 0 white,  
+         0px -1px 0 white,  
+         0px  1px 0 white;
+            
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color:rgba(255, 255, 255, 0.2);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        .question-container, .sub-question-container, .answer-container {
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 10px;
+        }
+        .question-input, .sub-question-input, .answer-input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .question-input{
+            width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    height: 100px; /* ارتفاع الحقل */
+    resize: vertical; /* السماح بتغيير الحجم يدويًا */
+    overflow-y: auto; /* إضافة شريط تمرير عند الحاجة */
+    vertical-align: top; /* يجعل النص يبدأ من الأعلى */
+        }
+        .add-question-btn, .add-sub-question-btn, .add-answer-btn, .submit-btn {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .add-sub-question-btn, .add-answer-btn {
+            background-color: #2196F3;
+        }
+        .add-question-btn:hover, .add-sub-question-btn:hover, .add-answer-btn:hover, .submit-btn:hover {
+            background-color: #45a049;
+        }
+        .sub-question-container, .answer-container {
+            margin-left: 40px;
+        }
+        .answer-options {
+            margin-top: 10px;
+        }
+        .answer-options input[type="radio"] {
+            margin-left: 5px;
+        }
+        .answer-options label {
+            margin-left: 10px;
+        }
+
+
+.logo {
+    position: absolute;
+    top: 10px;  /* جعلها في الأعلى */
+    left: 10px; /* جعلها في اليسار */
+    width: 100px; /* تكبير الصورة */
+    height: 100px;
+    border-radius: 10px;
+}
+        @media (max-width: 600px) {
+    body {
+        background: url('../images/Mbg.jpg') no-repeat center center fixed;
+        background-size: cover;
+    }
+
+    body::before {
+        position: fixed;
+    }
+    .logo {
+        width: 50px; /* تكبير الصورة */
+        height: 50px;
+    }
+}
+    </style>
+</head>
+<body>
+<img src="../images/logo.jpg" alt="شعار منصة ابن مندور" class="logo">
+
+   
+    <button class="menu-btn" onclick="toggleMenu()">
+        <i class="fas fa-bars"></i>
+      </button>
+
+<div class="sidebar" id="sidebar">
+    <ul>
+        <li><a href="../index.html"><i class="fas fa-sign-in-alt"></i> تسجيل خروج</a></li>
+        <li><a href="teacher_home.html"><i class="fas fa-home"></i> الرئيسية</a></li>
+        <li><a href="students.html"><i class="fas fa-user-graduate"></i> الطلاب</a></li>
+        <li><a href="add_student.html"><i class="fas fa-user-plus"></i> اضافة طالب جديد</a></li>
+        <li><a href="lessons_ctrl.html"><i class="fas fa-chalkboard-teacher"></i> ادارة الحصص</a></li>
+        <li><a href="exames_ctrl.html"><i class="fas fa-file-alt"></i> ادارة الامتحانات</a></li>
+
+    </ul>
+</div>
+
+
+<div class="container">
+    <h2>إنشاء امتحان</h2>
+    <label for="class-grade">الصف:</label>
+    <input type="text" id="class-grade" class="class-input" placeholder="ادخل الصف..." />
+
+
+    <div id="questions">
+        <!-- الأسئلة ستضاف هنا -->
+    </div>
+
+    <button class="add-question-btn" onclick="addQuestion()">أضف سؤال</button>
+    <button class="submit-btn" onclick="submitExam()">إرسال الامتحان</button>
+</div>
+
+<script>
+    let questionCount = 0;
+    let subQuestionCount = 0;
+    let answerCount = 0;
+
+    function addQuestion() {
+        questionCount++;
+        const questionContainer = document.createElement("div");
+        questionContainer.classList.add("question-container");
+
+        const label = document.createElement("label");
+        label.innerText = "السؤال " + questionCount + ": ";
+        
+        const input = document.createElement("textarea");
+        input.placeholder = "اكتب السؤال هنا...";
+        input.classList.add("question-input");
+        input.rows = 4; // تحديد عدد الأسطر الافتراضي
+        input.style.overflowY = "auto"; // إضافة التمرير العمودي تلقائيًا
+        input.style.resize = "vertical"; // السماح بتغيير الحجم يدويًا
+        const addSubQuestionBtn = document.createElement("button");
+        addSubQuestionBtn.classList.add("add-sub-question-btn");
+        addSubQuestionBtn.innerText = "+ إضافة سؤال فرعي";
+        addSubQuestionBtn.onclick = function() {
+            addSubQuestion(questionContainer);
+        };
+
+        questionContainer.appendChild(label);
+        questionContainer.appendChild(input);
+        questionContainer.appendChild(addSubQuestionBtn);
+        document.getElementById("questions").appendChild(questionContainer);
+    }
+
+    function addSubQuestion(parentQuestion) {
+        subQuestionCount++;
+        const subQuestionContainer = document.createElement("div");
+        subQuestionContainer.classList.add("sub-question-container");
+
+        const subLabel = document.createElement("label");
+        subLabel.innerText = subQuestionCount + ".";
+
+        const subInput = document.createElement("input");
+        subInput.type = "text";
+        subInput.placeholder = "اكتب السؤال الفرعي هنا...";
+        subInput.classList.add("sub-question-input");
+
+        const addAnswerBtn = document.createElement("button");
+        addAnswerBtn.classList.add("add-answer-btn");
+        addAnswerBtn.innerText = "+ إضافة إجابة";
+        addAnswerBtn.onclick = function() {
+            addAnswer(subQuestionContainer);
+        };
+
+        subQuestionContainer.appendChild(subLabel);
+        subQuestionContainer.appendChild(subInput);
+        subQuestionContainer.appendChild(addAnswerBtn);
+        parentQuestion.appendChild(subQuestionContainer);
+    }
+
+    function addAnswer(parentSubQuestion) {
+        answerCount++;
+        const answerContainer = document.createElement("div");
+        answerContainer.classList.add("answer-container");
+
+        const answerInput = document.createElement("input");
+        answerInput.type = "text";
+        answerInput.placeholder = "اكتب الإجابة هنا...";
+        answerInput.classList.add("answer-input");
+
+        const correctCheckbox = document.createElement("input");
+        correctCheckbox.type = "checkbox";
+        correctCheckbox.classList.add("correct-answer");
+
+        answerContainer.appendChild(answerInput);
+        answerContainer.appendChild(correctCheckbox);
+        parentSubQuestion.appendChild(answerContainer);
+    }
+
+    function submitExam() {
+    const classGrade = document.getElementById("class-grade").value; // الحصول على الصف
+    const questions = [];
+
+    document.querySelectorAll(".question-container").forEach((questionEl) => {
+        const questionText = questionEl.querySelector(".question-input").value;
+        const subQuestions = [];
+
+        questionEl.querySelectorAll(".sub-question-container").forEach((subEl) => {
+            const subQuestionText = subEl.querySelector(".sub-question-input").value;
+            const answers = [];
+
+            subEl.querySelectorAll(".answer-container").forEach((answerEl) => {
+                const answerText = answerEl.querySelector(".answer-input").value;
+                const isCorrect = answerEl.querySelector(".correct-answer").checked;
+                answers.push({ text: answerText, correct: isCorrect });
+            });
+
+            subQuestions.push({ text: subQuestionText, answers: answers });
+        });
+
+        questions.push({ text: questionText, subQuestions: subQuestions });
+    });
+
+    fetch("../php/save_exam.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ classGrade: classGrade, questions: questions }) // إضافة الصف للبيانات المرسلة
+    }).then(response => response.json())
+      .then(data => alert("تم حفظ الامتحان بنجاح!"))
+      .catch(error => console.error("Error:", error));
+}
+
+
+function toggleMenu() {
+    let sidebar = document.getElementById("sidebar");
+    sidebar.classList.toggle("active");
+}
+
+</script>
+
+</body>
+</html>

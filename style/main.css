@@ -1,0 +1,85 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+body {
+    background: url('../images/bg.jpg') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    direction: rtl;
+}
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.2); /* طبقة شفافة فوق الخلفية */
+    backdrop-filter: blur(8px); /* تأثير بلور */
+    z-index: -1;
+}
+
+.error {
+    color: red;
+    margin-top: 15px;
+    display: none;
+    font-size: 16px;
+}
+.background-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+
+.logo {
+    position: absolute;
+    top: 10px;  /* جعلها في الأعلى */
+    left: 10px; /* جعلها في اليسار */
+    width: 100px; /* تكبير الصورة */
+    height: 100px;
+    border-radius: 10px;
+}
+
+.logo:hover {
+    transform: translateY(-10px);
+  box-shadow: 0 15px 25px rgba(0, 123, 255, 0.4);
+  background: linear-gradient(135deg, #0056b3, #009ee3);
+  color: #ffffff; /* الأيقونة تصير بيضاء */
+  transform: rotate(10deg); /* ميلان خفيف للأيقونة */
+}
+
+.message {
+    margin-top: 20px;
+    font-size: 18px;
+}
+
+.success {
+    color: #4CAF50;
+}
+
+.error {
+    color: #f44336;
+}
+.message.loading img {
+    position: fixed; /* إبقاء الصورة ثابتة فوق جميع العناصر */
+    top: 50%; /* توسيط عمودي */
+    left: 50%; /* توسيط أفقي */
+    transform: translate(-50%, -50%); /* ضبط التمركز بدقة */
+    width: 50px; /* تصغير الحجم */
+    height: 50px; 
+    z-index: 9999; /* التأكد من ظهورها فوق جميع العناصر */
+    background: rgba(255, 255, 255, 0.8); /* خلفية شفافة خفيفة */
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* إضافة ظل ناعم */
+}

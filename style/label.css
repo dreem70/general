@@ -1,0 +1,27 @@
+.label {
+    display: flex;
+    flex-direction: column; /* يجعل العناصر عمودية */
+    align-items: flex-start; /* يجعل العناصر بمحاذاة اليسار */
+    background: #2c3e50;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: fit-content;
+    margin: 50px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+.label-text {
+    font-size: 50px;
+    font-weight: bold;
+    text-shadow: 
+        -1px -1px 0 white,  
+         1px -1px 0 white,  
+        -1px  1px 0 white,  
+         1px  1px 0 white,
+        -1px  0px 0 white,  
+         1px  0px 0 white,  
+         0px -1px 0 white,  
+         0px  1px 0 white;
+}

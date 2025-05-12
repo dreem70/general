@@ -1,0 +1,80 @@
+.btn {
+    padding: 15px;
+    margin: 5px;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 16px;
+    display: inline-block;
+    transition: 0.3s;
+    width: 100%;
+    font-weight: bold;
+}
+
+.class-btn {
+    background-color: #2c3e50 ;
+    color:white;
+}
+
+.class-btn:hover {
+    background-color: gray;
+}
+
+.semester-btn {
+    background-color: #3B4F64;
+    color: white;
+    display: block;
+    padding-left: 30px;
+    margin-bottom: 5px;
+    border-radius: 6px;
+    font-size: 15px;
+    width: calc(100% - 40px);
+}
+
+.semester-btn:hover {
+    background-color: gray;
+}
+
+.unit-btn {
+    background-color: #4A6078;
+    color: white;
+    display: block;
+    padding-left: 40px;
+    margin-bottom: 5px;
+    border-radius: 6px;
+    font-size: 14px;
+    width: calc(100% - 50px);
+}
+
+.unit-btn:hover {
+    background-color: gray;
+}
+
+.lesson-btn {
+    background-color: #59718C;
+    color: white;
+    display: block;
+    padding-left: 50px;
+    margin-bottom: 5px;
+    border-radius: 6px;
+    font-size: 13px;
+    width: calc(100% - 60px);
+}
+
+.lesson-btn:hover {
+    background-color: gray;
+}
+
+.hidden {
+    display: none;
+}
+
+.btn-container {
+    margin-left: 20px;
+    display: none;
+    margin-top: 10px;
+}
+
+.btn-container.active {
+    display: block;
+}

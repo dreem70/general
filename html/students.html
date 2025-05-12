@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../images/logo.jpg" type="image/jpg">
+    <title>بيانات الطلاب</title>
+    
+    <link rel="stylesheet" href="../style/card.css">
+    <link rel="stylesheet" href="../style/buttons.css">
+    <link rel="stylesheet" href="../style/form.css">
+    <link rel="stylesheet" href="../style/H.css">
+   <link rel="stylesheet" href="../style/container.css">
+
+    <link rel="stylesheet" href="../style/main.css">
+    <link rel="stylesheet" href="../style/mobile.css">
+    <link rel="stylesheet" href="../style/side_menu.css">
+    <link rel="stylesheet" href="../style/table.css">
+
+
+</head>
+<body>
+    <img src="../images/logo.jpg" alt="شعار منصة ابن مندور" class="logo">
+    <button class="menu-btn" onclick="toggleMenu()">
+        <i class="fas fa-bars"></i>
+      </button>
+
+    <div class="sidebar" id="sidebar">
+        <ul>
+            <li><a href="../index.html"><i class="fas fa-sign-in-alt"></i> تسجيل الدخول</a></li>
+            <li><a href="teacher_home.html"><i class="fas fa-home"></i> الرئيسية</a></li>
+            <li><a href="students.html"><i class="fas fa-user-graduate"></i> الطلاب</a></li>
+            <li><a href="add_student.html"><i class="fas fa-user-plus"></i> اضافة طالب جديد</a></li>
+            <li><a href="lessons_ctrl.html"><i class="fas fa-chalkboard-teacher"></i> ادارة الحصص</a></li>
+            <li><a href="exames_ctrl.html"><i class="fas fa-file-alt"></i> ادارة الامتحانات</a></li>
+        </ul>
+    </div>
+
+    <div class="container">
+        <h1>قائمة الطلاب</h1>
+        <div class="count">
+            <span>عدد الطلاب: </span><span id="student-count">0</span>
+        
+        
+
+<div class="dropdown-container">
+    <div class="dropdown">
+        <button class="dropbtn">الإجراءات ⮟</button>
+        <div class="dropdown-content">
+            <button class="btn-delete" onclick="confirmDelete()">حذف المحدد</button>
+            <button class="btn-select-all" onclick="toggleSelectAll()">تحديد الكل</button>
+            <button class="btn-back" onclick="applyAttendanceChanges()">تسجيل المحدد</button>
+        </div>
+    </div>
+
+    <div class="dropdown">
+        <button class="dropbtn">السجل ⮟</button>
+        <div class="dropdown-content">
+            <a href="../php/check_absence.php" class="btn-absence-log">سجل الغياب</a>
+            <a href="../php/fees.php" class="btn-absence-log">المدفوعات</a>
+        </div>
+    </div>
+</div>
+
+<input type="text" id="search-input" placeholder="ابحث بالاسم أو الفصل أو الكود" oninput="searchStudents()">
+<img id="loading" src="../images/loading.gif" alt="تحميل..." style="display:none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 50px; height: 50px; z-index: 2000;">
+<!-- إضافة هذا الجزء داخل الـ container -->
+
+</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>اختيار</th>
+                    <th>الاسم</th>
+                    <th>كود الطالب</th>
+                    <th>الفصل</th>
+                    <th>الحضور والغياب</th>
+
+
+                </tr>
+            </thead>
+            <tbody id="students-list">
+                <!-- سيتم ملء البيانات هنا بواسطة JavaScript -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="../JS/ToggleMenu.js"></script>
+    <script src="../JS/students.js"></script>
+
+</body>
+</html> 

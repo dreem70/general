@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../images/logo.jpg" type="image/jpg">
+    <title>اختبار</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="../style/side_menu.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            direction: rtl;
+            padding: 20px;
+            background: url('../images/bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+            background-attachment: fixed;
+            
+        }
+        body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* طبقة شفافة فوق الخلفية */
+    backdrop-filter: blur(8px); /* تأثير بلور */
+    z-index: -1;
+}
+        .container {
+    max-width: 1000px;
+    margin: 50px auto; /* إضافة مسافة علوية */
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+        .question-container {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-bottom: 2px solid #ddd;
+            color: #2c3e50;
+            
+        }
+        .answer-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            font-size: 16px;
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .answer-btn:hover {
+            background-color: #1976D2;
+        }
+        .selected-answer {
+            background-color: #4CAF50 !important;
+        }
+        .top-bar {
+    display: flex;
+    justify-content: center; /* يجعل النص في المنتصف */
+    align-items: center;
+    background-color: #2c3e50;
+    color: white;
+    padding: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    width: 100%;
+    text-align: center; /* تأكيد المحاذاة في حالة النص متعدد الأسطر */
+}
+
+
+        .finish-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            font-size: 18px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .hidden {
+            display: none;
+        }
+        #result-card {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+
+
+.logo {
+    position: absolute;
+    top: 10px;  /* جعلها في الأعلى */
+    left: 10px; /* جعلها في اليسار */
+    width: 100px; /* تكبير الصورة */
+    height: 100px;
+    border-radius: 10px;
+}
+        @media (max-width: 600px) {
+    body {
+        background: url('../images/Mbg.jpg') no-repeat center center fixed;
+        background-size: cover;
+    }
+
+    body::before {
+        position: fixed;
+    }
+}
+    </style>
+</head>
+<body>
+    <img src="../images/logo.jpg" alt="شعار منصة ابن مندور" class="logo">
+<button class="menu-btn" onclick="toggleMenu()">
+        <i class="fas fa-bars"></i>
+      </button>
+
+<div class="sidebar" id="sidebar">
+    <ul>
+        <li><a href="../index.html"><i class="fas fa-sign-out-alt"></i> تسجيل خروج</a></li>
+        <li><a href="student_home.html"><i class="fas fa-house"></i> الرئيسية</a></li>
+        <li><a href="show_lessons_fr_student.html"><i class="fas fa-book-open"></i> عرض الحصص</a></li>
+        <li><a href="examm.html"><i class="fas fa-file-pen"></i>  الدخول للامتحان</a></li>
+        <li><a href="tasks.html"><i class="fas fa-tasks"></i> قائمة المهام</a></li>
+
+
+    </ul>
+</div>
+
+
+<div class="container">
+    <div id="quiz-container"></div>
+    <button id="finish-exam" class="finish-btn" onclick="finishExam()">إنهاء الامتحان</button>
+    <div id="result-card" class="hidden">
+        <h3>نتيجتك</h3>
+        <p>عدد الإجابات الصحيحة: <span id="correct-count"></span></p>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    let username = localStorage.getItem("username") || "مستخدم مجهول";
+    let studentClass = localStorage.getItem("studentClass") || "";
+
+
+    if (!studentClass) {
+        alert("لم يتم العثور على صف في Local Storage!");
+        return;
+    }
+
+    fetch(`../php/quiz.php?class_grade=${encodeURIComponent(studentClass)}&username=${encodeURIComponent(username)}`)
+    .then(response => response.json())
+    .then(data => {
+        if (data.exam_completed) {
+            document.getElementById("quiz-container").innerHTML = `
+                <div id="exam-completed-card" class="result-card">
+                    <h3>تم تقديم الامتحان من قبل</h3>
+                    <p>لقد أكملت هذا الاختبار مسبقًا.</p>
+                </div>`;
+            document.getElementById("finish-exam").classList.add("hidden");
+        } else {
+            renderQuestions(data.questions);
+            window.correctAnswers = data.correct_answers;
+            window.selectedAnswers = {};
+        }
+    })
+    .catch(error => console.error("حدث خطأ أثناء تحميل الامتحان:", error));
+});
+
+    function renderQuestions(questions) {
+        let quizContainer = document.getElementById("quiz-container");
+        quizContainer.innerHTML = "";
+
+        questions.forEach(question => {
+            let questionDiv = document.createElement("div");
+            questionDiv.classList.add("question-container");
+
+            let questionTitle = document.createElement("h3");
+            questionTitle.textContent = question.text;
+            questionDiv.appendChild(questionTitle);
+
+            Object.entries(question.sub_questions).forEach(([subQuestionId, subQuestion]) => {
+                let subQDiv = document.createElement("div");
+                subQDiv.innerHTML = `<p><strong>${subQuestion.text}</strong></p>`;
+
+                subQuestion.answers.forEach(answer => {
+                    let btn = document.createElement("button");
+                    btn.classList.add("answer-btn");
+                    btn.textContent = answer.text;
+                    btn.setAttribute("data-sub-question", subQuestionId);
+                    btn.onclick = function() {
+                        selectAnswer(btn, subQuestionId, answer.id);
+                    };
+                    subQDiv.appendChild(btn);
+                });
+
+                questionDiv.appendChild(subQDiv);
+            });
+
+            quizContainer.appendChild(questionDiv);
+        });
+    }
+
+    function selectAnswer(button, subQuestionId, answerId) {
+        // إزالة التحديد من جميع الأزرار الأخرى لهذا السؤال الفرعي
+        document.querySelectorAll(`button[data-sub-question="${subQuestionId}"]`).forEach(btn => {
+            btn.classList.remove("selected-answer");
+        });
+
+        // تحديد الزر الجديد
+        button.classList.add("selected-answer");
+
+        // تخزين الإجابة المختارة
+        window.selectedAnswers[subQuestionId] = answerId;
+    }
+
+    function finishExam() {
+    let correctCount = 0;
+    
+    for (let subQuestionId in window.selectedAnswers) {
+        if (window.correctAnswers[subQuestionId] == window.selectedAnswers[subQuestionId]) {
+            correctCount++;
+        }
+    }
+
+    let username = localStorage.getItem("username") || "مجهول";
+    let studentClass = localStorage.getItem("studentClass") || "غير معروف";
+
+    fetch("../php/save_result.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: `username=${encodeURIComponent(username)}&correct_answers=${correctCount}&studentClass=${encodeURIComponent(studentClass)}`
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.message === "لقد أكملت هذا الاختبار مسبقًا") {
+            document.getElementById("quiz-container").innerHTML = `
+                <div id="exam-completed-card" class="result-card">
+                    <h3>تم تقديم الامتحان بالفعل</h3>
+                    <p>لقد أكملت هذا الاختبار مسبقًا ولا يمكنك إعادة تقديمه.</p>
+                </div>`;
+            document.getElementById("finish-exam").classList.add("hidden");
+        } else {
+            document.getElementById("correct-count").textContent = correctCount;
+            document.getElementById("result-card").classList.remove("hidden");
+        }
+    })
+    .catch(error => console.error("حدث خطأ أثناء حفظ النتيجة:", error));
+}
+
+
+    function saveResult(username, correctCount) {
+    let studentClass = localStorage.getItem("studentClass") || "غير معروف";
+
+    fetch("../php/save_result.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: `username=${encodeURIComponent(username)}&correct_answers=${correctCount}&studentClass=${encodeURIComponent(studentClass)}`
+    });
+}
+
+function toggleMenu() {
+    let sidebar = document.getElementById("sidebar");
+    sidebar.classList.toggle("active");
+}
+
+</script>
+
+</body>
+</html>

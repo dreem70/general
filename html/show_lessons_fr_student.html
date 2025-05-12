@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../images/logo.jpg" type="image/jpg">
+    <title>عرض الدروس للطلاب</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="../style/side_menu.css">
+    <style>
+body {
+    font-family: Arial, sans-serif;
+    background: url('../images/bg.jpg') no-repeat center center fixed;
+    background-size: cover;
+    direction: rtl;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* طبقة شفافة فوق الخلفية */
+    backdrop-filter: blur(8px); /* تأثير بلور */
+    z-index: -1;
+}
+
+
+
+
+#class-container {
+    width: 80%;
+    margin: auto;
+    padding-top: 20px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    
+    position: absolute; /* أو استخدم fixed إذا كنت تريده ثابتًا عند التمرير */
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+
+
+
+
+
+
+.semester-btn {
+    background-color: #2c3e50; 
+    color: white;
+    display: block;
+    padding-left: 30px;
+    margin-bottom: 5px;
+    border-radius: 6px;
+    font-size: 15px;
+    width: calc(100% - 40px);
+    height:50px;
+}
+
+.semester-btn:hover {
+    background-color: #777; /* رمادي داكن */
+}
+
+.unit-btn {
+    background-color: #3a5068;
+    color: white;
+    width: 90%;  /* أصغر من الفصل */
+    height:50px;
+    font-size: 18px;
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+}
+
+/* زر الحصة - أصغر قليلًا من الوحدة */
+.lesson-btn {
+    background-color:#4c657f;
+    color: #FFD700;
+    width: 80%;  /* أصغر من الوحدة */
+    height:50px;
+    gap:50px;
+    font-size: 16px;
+    border-radius: 6px;
+    transition: all 0.3s ease-in-out;
+}
+.logo {
+    position: absolute;
+    top: 10px;  /* جعلها في الأعلى */
+    left: 10px; /* جعلها في اليسار */
+    width: 100px; /* تكبير الصورة */
+    height: 100px;
+    border-radius: 10px;
+}
+
+@media (max-width: 600px) {
+    body {
+        background: url('../images/Mbg.jpg') no-repeat center center fixed;
+        background-size: cover;
+    }
+
+    body::before {
+        position: fixed;
+    }
+
+    #class-container {
+        width: 90%;
+        padding: 15px;
+        margin-top: 15%;
+    }
+
+    .semester-btn {
+        font-size: 14px;
+        height: 45px;
+        width: calc(100% - 20px);
+        padding-left: 20px;
+    }
+
+    .unit-btn {
+        font-size: 16px;
+        height: 45px;
+        width: 85%;
+    }
+
+    .lesson-btn {
+        font-size: 14px;
+        height: 40px;
+        width: 75%;
+    }
+
+    .logo {
+        width: 60px;
+        height: 60px;
+    }
+
+    .menu-btn {
+        font-size: 16px;
+        padding: 8px 12px;
+    }
+
+    .sidebar {
+        width: 200px;
+    }
+
+    .sidebar ul li {
+        padding: 10px;
+    }
+
+    .sidebar ul li a {
+        font-size: 16px;
+    }
+}
+
+    </style>
+</head>
+<body>
+    
+ <button class="menu-btn" onclick="toggleMenu()">
+        <i class="fas fa-bars"></i>
+      </button>
+
+<div class="sidebar" id="sidebar">
+    <ul>
+        <li><a href="../index.html"><i class="fas fa-sign-out-alt"></i> تسجيل خروج</a></li>
+        <li><a href="student_home.html"><i class="fas fa-house"></i> الرئيسية</a></li>
+        <li><a href="show_lessons_fr_student.html"><i class="fas fa-book-open"></i> عرض الحصص</a></li>
+        <li><a href="examm.html"><i class="fas fa-file-pen"></i>  الدخول للامتحان</a></li>
+        <li><a href="tasks.html"><i class="fas fa-tasks"></i> قائمة المهام</a></li>
+
+
+    </ul>
+</div>
+
+    <img src="../images/logo.jpg" alt="شعار منصة ابن مندور" class="logo">
+
+    <div class="container" id="class-container">
+        <!-- سيتم تحميل الأزرار هنا عبر جافا سكريبت -->
+    </div>
+
+<script>
+    // الحصول على قيمة الصف من localStorage
+    const studentClass = localStorage.getItem('studentClass');
+    
+    if (!studentClass) {
+        alert("لم يتم العثور على الصف في بيانات المستخدم.");
+    } else {
+        fetch('../php/show_lessons_fr_student.php?class=' + studentClass)
+            .then(response => response.json())
+            .then(data => {
+                const container = document.getElementById('class-container');
+
+                if (data && data.length > 0) {
+                    data.forEach(classItem => {
+                        if (classItem.class === studentClass) {
+                            classItem.semesters.forEach(semester => {
+                                // التحقق إذا كانت البيانات غير null أو فارغة
+                                if (semester.semester && semester.units && semester.units.length > 0) {
+                                    const semesterBtn = document.createElement('button');
+                                    semesterBtn.classList.add('btn', 'semester-btn');
+                                    semesterBtn.innerText = "الفصل: " + semester.semester;
+                                    semesterBtn.onclick = () => toggleUnitButtons(semesterBtn, semester);
+
+                                    container.appendChild(semesterBtn);
+                                }
+                            });
+                        }
+                    });
+                } else {
+                    container.innerHTML = "لا توجد بيانات لعرضها.";
+                }
+            })
+            .catch(error => console.log(error));
+    }
+
+    function toggleUnitButtons(button, semester) {
+        let existingUnits = document.getElementById(`semester-${semester.semester}`);
+        if (existingUnits) {
+            existingUnits.remove(); // حذف التفريعات عند النقر مرة أخرى
+            button.classList.remove("active-btn");
+            return;
+        }
+
+        const unitContainer = document.createElement('div');
+        unitContainer.id = `semester-${semester.semester}`;
+        unitContainer.classList.add("btn-container", "expanded");
+
+        semester.units.forEach(unit => {
+            // التحقق إذا كانت الوحدة غير null أو فارغة
+            if (unit.unit && unit.lessons && unit.lessons.length > 0) {
+                const unitBtn = document.createElement('button');
+                unitBtn.classList.add('btn', 'unit-btn');
+                unitBtn.innerText = "الوحدة: " + unit.unit;
+                unitBtn.onclick = () => toggleLessonButtons(unitBtn, unit);
+
+                unitContainer.appendChild(unitBtn);
+            }
+        });
+
+        button.after(unitContainer);
+        button.classList.add("active-btn");
+    }
+
+    function toggleLessonButtons(button, unit) {
+        let existingLessons = document.getElementById(`unit-${unit.unit}`);
+        if (existingLessons) {
+            existingLessons.remove(); // حذف التفريعات عند النقر مرة أخرى
+            button.classList.remove("active-btn");
+            return;
+        }
+
+        const lessonContainer = document.createElement('div');
+        lessonContainer.id = `unit-${unit.unit}`;
+        lessonContainer.classList.add("btn-container", "expanded");
+
+        unit.lessons.forEach(lesson => {
+            // التحقق إذا كان الحصة غير null أو فارغ
+            if (lesson && lesson.trim() !== "") {
+                const lessonBtn = document.createElement('button');
+                lessonBtn.classList.add('btn', 'lesson-btn');
+                lessonBtn.innerText = "الحصة: " + lesson;
+                lessonBtn.onclick = () => {
+                    localStorage.setItem('lessonName', lesson);
+                    window.location.href = 'lesson_show_student.html';
+                };
+
+                lessonContainer.appendChild(lessonBtn);
+            }
+        });
+
+        button.after(lessonContainer);
+        button.classList.add("active-btn");
+    }
+    function toggleMenu() {
+    let sidebar = document.getElementById("sidebar");
+    sidebar.classList.toggle("active");
+}
+</script>
+
+
+</body>
+</html>

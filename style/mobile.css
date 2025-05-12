@@ -1,0 +1,30 @@
+@media (max-width: 600px) {
+    body {
+        background: url('../images/Mbg.jpg') no-repeat center center fixed;
+        background-size: cover;
+    }
+
+    body::before {
+        position: fixed;
+    }
+    .login-container {
+    
+    width: 1000px;
+    max-width: 90%;
+    }
+    .login-container h2 {
+        font-size: 19px;
+    }
+    .input-group label {
+        font-size: 15px;
+    }
+    .input-group input {
+        font-size:15px;
+    }
+    .btn {
+    width: 60%;
+    
+    }
+    
+
+}

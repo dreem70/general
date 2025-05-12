@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <link rel="icon" href="images/logo.jpg" type="image/jpg"> <!-- إضافة أيقونة الصفحة -->
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الجنرال في الجغرافيا والتاريخ</title>
+    <link rel="stylesheet" href="style/buttons.css">
+    <link rel="stylesheet" href="style/input.css">
+    <link rel="stylesheet" href="style/login.css">
+    <link rel="stylesheet" href="style/main_first.css">
+    <link rel="stylesheet" href="style/mobile.css">
+    <link rel="stylesheet" href="style/login_container.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+
+</head>
+<body>
+    <img src="images/logo.jpg" alt="شعار منصة ابن مندور" class="logo" onclick="goToTeacherHome()">
+    <video autoplay loop muted class="background-video">
+        <source src="videos/bg.mp4" type="video/mp4">
+        متصفحك لا يدعم الفيديو.
+    </video>
+    <div class="login-container">
+        
+        <h2>قم بتسجيل الدخول</h2>
+        <div class="input-group">
+            <label for="username">الاسم</label>
+            <input type="text" id="username" placeholder="ادخل الاسم">
+        </div>
+        <div class="input-group">
+            <label for="code">الكود</label>
+            <input type="number" id="code" placeholder="ادخل الكود">
+        </div>
+        <button id="entry" onclick="checkLogin()"><i class="fas fa-sign-in-alt"></i> دخول</button>  
+        <p class="error" id="error">اسم المستخدم أو الكود غير صحيح</p>
+    </div>
+
+<script src="JS/check_login.js"></script>
+<script src="JS/homePage.js"></script>
+
+
+
+</body>
+</html>

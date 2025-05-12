@@ -1,0 +1,6 @@
+select, input { width: 100%; padding: 10px; margin: 10px 0; font-size: 16px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 10px; border: 1px solid #ddd; }
+        th { background: #333; color: white; }
+        .readonly { background: #e9e9e9; pointer-events: none; }
+        

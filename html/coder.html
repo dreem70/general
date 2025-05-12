@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="logo.jpg" type="image/jpg">
+    <title>صفحة مطور المنصة</title>
+    <link rel="stylesheet" href="../style/side_menu.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            direction: rtl;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+        .container {
+            padding: 20px;
+            max-width: 800px;
+            margin: auto;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            color: #333;
+        }
+        p {
+            color: #555;
+            line-height: 1.6;
+        }
+        .contact-info {
+            margin-top: 20px;
+        }
+        .contact-info a {
+            display: block;
+            margin-bottom: 10px;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>صفحة مطور المنصة</h1>
+    </header>
+    <button class="menu-btn" onclick="toggleMenu()">
+        <i class="fas fa-bars"></i>
+      </button>
+
+    <div class="sidebar" id="sidebar">
+        <ul>
+        <li><a href="../index.html"><i class="fas fa-sign-in-alt"></i> تسجيل خروج</a></li>
+        <li><a href="teacher_home.html"><i class="fas fa-home"></i> الرئيسية</a></li>
+        <li><a href="students.html"><i class="fas fa-user-graduate"></i> الطلاب</a></li>
+        <li><a href="add_student.html"><i class="fas fa-user-plus"></i> اضافة طالب جديد</a></li>
+        <li><a href="lessons_ctrl.html"><i class="fas fa-chalkboard-teacher"></i> ادارة الحصص</a></li>
+        <li><a href="html/exames_ctrl.html"><i class="fas fa-file-alt"></i> ادارة الامتحانات</a></li>
+        </ul>
+    </div>
+    <div class="container">
+        <h2>م/  محمد رفعت بدير</h2>
+        <p><strong>التخصص:</strong> مطور ويب و أندرويد و سطح مكتب</p>
+
+        <h3>السيرة الذاتية</h3>
+        <p>المهندس محمد رفعت بدير  مطور محترف ومتخصص في تطوير تطبيقات الويب، الأندرويد، وتطبيقات سطح المكتب. امتلك الخبرة في البرمجة وتطوير التطبيقات باستخدام تقنيات حديثة، مع التركيز على الجودة والكفاءة.</p>
+
+        <h3>المهارات</h3>
+        <ul>
+            <li>التعامل مع php </li>
+            <li>تطوير تطبيقات الويب باستخدام HTML, CSS, JavaScript.</li>
+            <li>تطوير تطبيقات أندرويد باستخدام Java, Kotlin.</li>
+            <li>تطوير تطبيقات سطح المكتب باستخدام python.</li>
+            <li>بناء APIs باستخدام Node.js .</li>
+            <li>التعامل مع قواعد البيانات MySQL .</li>
+            <li>استخدام الذكاء الاصطناعي في التطوير </li>
+        </ul>
+
+        
+        <div class="contact-info">
+            <h3>للتواصل:</h3>
+            <p>رقم الهاتف: <strong>01040807328</strong></p>
+            <p>واتساب: <strong><a href="https://wa.me/201040807328" target="_blank">01558983325</a></strong></p>
+            <p>للتواصل عبر الماسنجر: <strong><a href="https://m.me/557629360770725" target="_blank">اضغط هنا</a></strong></p>
+            <p>معرض اعمالي <strong><a href="https://myportfolio7.infinityfreeapp.com" target="_blank">اضغط هنا</a></strong></p>
+        </div>
+    </div>
+    <script src="../JS/ToggleMenu.js"></script>
+</body>
+</html>
